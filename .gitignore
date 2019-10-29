@@ -1,7 +1,7 @@
 # -*- mode: gitignore; -*-
 
-
 vendor
+.phpunit.result*
 
 
 # Emacs
