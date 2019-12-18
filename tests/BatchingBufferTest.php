@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Tests;
+namespace Webapps\Tests;
 
-use WebApps\Tests\TestCase;
+use Webapps\Tests\TestCase;
 
 use Illuminate\Support\Collection;
 
-use WebApps\Util\BatchingBuffer;
+use Webapps\Util\BatchingBuffer;
 
 class BatchingBufferTest extends TestCase
 {

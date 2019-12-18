@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Tests\Traits;
+namespace Webapps\Tests\Traits;
 
-use WebApps\Tests\TestCase;
+use Webapps\Tests\TestCase;
 
 use InvalidArgumentException;
 
-use WebApps\Util\Traits\MakeWithKeywords;
+use Webapps\Util\Traits\MakeWithKeywords;
 
 class MakeWithKeywordsTest extends TestCase
 {

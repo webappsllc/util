@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Tests\KeywordArguments;
+namespace Webapps\Tests\KeywordArguments;
 
-use WebApps\Tests\TestCase;
+use Webapps\Tests\TestCase;
 
-use WebApps\Util\KeywordArguments\KeywordCallable;
+use Webapps\Util\KeywordArguments\KeywordCallable;
 
 class KeywordCallableTest extends TestCase
 {

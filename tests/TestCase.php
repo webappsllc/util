@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Tests;
+namespace Webapps\Tests;
 
 require_once( __DIR__ . '/../vendor/autoload.php');
 

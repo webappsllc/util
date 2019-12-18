@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Util;
+namespace Webapps\Util;
 
 use LogicException;
 use ArrayAccess;
@@ -16,8 +16,8 @@ use Illuminate\Support\{
 };
 use Illuminate\Contracts\Support\Arrayable;
 
-use WebApps\Util\Traits\MakeWithKeywords; 
-use WebApps\Util\Contracts\ConvertsToData; 
+use Webapps\Util\Traits\MakeWithKeywords; 
+use Webapps\Util\Contracts\ConvertsToData; 
 
 /**
  * A class designed to encapsulate a simple data object.
