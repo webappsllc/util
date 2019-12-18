@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Util\Contracts;
+namespace Webapps\Util\Contracts;
 
 /**
  * Use with classes that can be converted to data where data is

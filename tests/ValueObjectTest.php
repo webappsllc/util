@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Tests;
+namespace Webapps\Tests;
 
 use ErrorException;
 
 use Illuminate\Support\Collection;
 
-use WebApps\Tests\TestCase;
-use WebApps\Util\ValueObject;
+use Webapps\Tests\TestCase;
+use Webapps\Util\ValueObject;
 
 class ValueObjectTest extends TestCase
 {

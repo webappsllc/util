@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Util\KeywordArguments;
+namespace Webapps\Util\KeywordArguments;
 
 use ReflectionClass;
 

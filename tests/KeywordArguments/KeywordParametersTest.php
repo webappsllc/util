@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Tests\KeywordArguments;
+namespace Webapps\Tests\KeywordArguments;
 
-use WebApps\Tests\TestCase;
+use Webapps\Tests\TestCase;
 
 use ReflectionFunction;
 use ReflectionMethod;
-use WebApps\Util\KeywordArguments\KeywordParameters;
+use Webapps\Util\KeywordArguments\KeywordParameters;
 
 class KeywordParametersTest extends TestCase
 {

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace WebApps\Util\Traits;
+namespace Webapps\Util\Traits;
 
 use ReflectionClass;
 use InvalidArgumentException;
 
-use WebApps\Util\KeywordArguments\KeywordMaker;
+use Webapps\Util\KeywordArguments\KeywordMaker;
 
 /**
  * Implements a static make function that will build the class from an array
