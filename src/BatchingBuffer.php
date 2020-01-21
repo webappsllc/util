@@ -36,32 +36,30 @@ class BatchingBuffer implements Countable
         return $this->buffer->count() >= $this->limit;
     }
 
-    public function push($item, ?callable $onFlush = null) {
+    public function push($item) {
         $this->buffer->push($item);
-        $this->attemptFlush($onFlush);
     }
 
-    public function pushMany(iterable $itemList, ?callable $onFlush = null)
+    public function pushMany(iterable $itemList)
     {
         foreach ($itemList as $item) {
             $this->buffer->push($item);
         }
-        $this->attemptFlush($onFlush);
+        $this->attemptFlush();
     }
 
-    public function attemptFlush(?callable $onFlush = null)
+    public function attemptFlush()
     {
         while ($this->atLimit()) {
-            $this->forceFlush($onFlush);
+            $this->forceFlush();
         }
     }
 
-    public function forceFlush(?callable $onFlush = null)
+    public function forceFlush()
     {
         if($this->isEmpty()) { return; }
         $rest = $this->buffer->splice($this->limit);
         with($this->buffer, $this->onFlush);
-        with($this->buffer, $onFlush);
         $this->buffer = $rest;
     }
 }
