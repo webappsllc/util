@@ -17,6 +17,7 @@ use Illuminate\Support\{
 use Illuminate\Contracts\Support\Arrayable;
 
 use Webapps\Util\Traits\MakeWithKeywords; 
+use Webapps\Util\Traits\ReadOnlyArrayAccess; 
 use Webapps\Util\Contracts\ConvertsToData; 
 
 /**
@@ -31,6 +32,7 @@ abstract class ValueObject implements
     ConvertsToData
 {
     use MakeWithKeywords;
+    use ReadOnlyArrayAccess;
 
     public function __construct(array $kwSplat)
     {
@@ -102,40 +104,5 @@ abstract class ValueObject implements
     public function __set($name, $_value)
     {
         throw new LogicException("Cannot set new properties on ValueObjects.");
-    }
-
-
-    /**
-     * Determine the existence of a property.
-     */
-    public function offsetExists ( $mixOffset ) : bool
-    {
-        return property_exists($this, $mixOffest);
-    }
-
-    /**
-     * Get a property with array access.
-     */
-    public function offsetGet ( $offset )
-    {
-        return $this->{$offset};
-    }
-
-    /**
-     * Called when attempting to set a property with array access. Always throws.
-     * @throws LogicException
-     */
-    public function offsetSet ( $mixOffset, $mixValue )
-    {
-        throw new LogicException("Cannot alter value of data object.");
-    }
-
-    /**
-     * Called when attempting to unset a property with array access. Always throws.
-     * @throws LogicException
-     */
-    public function offsetUnset ( $mixOffset )
-    {
-        throw new LogicException("Cannot unset fielts in data object.");
     }
 }
