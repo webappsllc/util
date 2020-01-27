@@ -107,3 +107,28 @@ function xml_to_array($xml, array $options = []) : array {
         $xml->getName() => $propertiesArray
     ];
 }
+
+/**
+ * Get the reflection object for a callable.
+ */
+function reflect_callable(callable $func) : ReflectionFunctionAbstract {
+    if ($func instanceof Closure) {
+        return new ReflectionFunction($func);
+    } elseif (is_object($func)) {
+        return new ReflectionMethod($func, '__invoke');
+    } else {
+        if(is_string($func)) {
+            $func = explode('::', $func);
+        } elseif(!is_array($func)) {
+            $func = [$func];
+        }
+
+        if (count($func) === 1) {
+            return new ReflectionFunction($func);
+        } elseif (count($func) === 2) {
+            return new ReflectionMethod(...$func);
+        }
+    }
+    throw new InvalidArgumentException('Cannot determine reflection type for callable.');
+    
+}
