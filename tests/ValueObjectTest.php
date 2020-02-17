@@ -65,6 +65,12 @@ class ValueObjectTest extends TestCase
     {
         $this->assertEquals($this->value->toData(), ['foo_prop' => 'foo_value', 'bar_prop' => 'bar_value']);
     }
+
+    /** @test */
+    public function value_object_needs_no_props() {
+      $val = new NoProps;
+      $this->assertTrue(true);
+    }
 }
 
 class MockValueObject extends ValueObject
@@ -79,3 +85,5 @@ class MockValueObject extends ValueObject
         $this->barProp = $barProp;
     }
 }
+
+class NoProps extends ValueObject {}

@@ -34,7 +34,7 @@ abstract class ValueObject implements
     use MakeWithKeywords;
     use ReadOnlyArrayAccess;
 
-    public function __construct(array $kwSplat)
+    public function __construct(array $kwSplat = [])
     {
         foreach ($kwSplat as $key => $value) {
             if (property_exists($this, $key)) {
