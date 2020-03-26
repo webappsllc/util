@@ -12,7 +12,7 @@ use Webapps\Util\KeywordArguments\KeywordMaker;
  */
 trait MakeWithKeywords {
 
-    protected static $_maker = null;
+    protected static $_maker = [];
 
     /**
      * Creates an instance of this object from an array with string keys.
@@ -39,10 +39,10 @@ trait MakeWithKeywords {
     }
 
     protected static function _getMaker() : KeywordMaker {
-        if (is_null(static::$_maker)) {
-            static::$_maker = new KeywordMaker(static::class);
+        if (!isset(static::$_maker[static::class])) {
+            static::$_maker[static::class] = new KeywordMaker(static::class);
         }
 
-        return static::$_maker;
+        return static::$_maker[static::class];
     }
 }

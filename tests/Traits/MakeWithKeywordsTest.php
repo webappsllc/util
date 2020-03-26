@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Webapps\Tests\Traits;
+namespace Webapps\Tests\Traits\MakeWithKeywords;
 
 use Webapps\Tests\TestCase;
 
@@ -50,6 +50,13 @@ class MakeWithKeywordsTest extends TestCase
         $this->assertArraySubset(['moreStuff' => 100, 'extraOption' => 100], $obj->kwSplat);
     }
 
+    /** @test */
+    public function class_hierarchies_work() {
+        $obj = HostClass::make(['stringVar' => 'stringVar']);
+        $obj2 = BaseClass::make(['stringVar' => 'stringVar']);
+
+        $this->assertEquals($obj->stringVar, $obj2->stringVar);
+    }
 }
 
 class HostClass
@@ -71,11 +78,20 @@ class HostClass
 
 }
 
-class HostClassSplat
+class BaseClass
 {
     use MakeWithKeywords;
 
-    public $stringVar;
+    public $strinVar;
+
+    public function __construct(string $stringVar) {
+        $this->stringVar = $stringVar;
+    }
+}
+
+class HostClassSplat extends BaseClass
+{
+
     public $nullableVar;
     public $defaultVar;
     public $noTypeVar;
@@ -83,11 +99,10 @@ class HostClassSplat
 
     public function __construct(string $stringVar, ?string $nullableVar = null, array $kwSplat, string $defaultVar = 'default', $noTypeVar)
     {
-        $this->stringVar = $stringVar;
+        parent::__construct($stringVar);
         $this->nullableVar = $nullableVar;
         $this->defaultVar = $defaultVar;
         $this->noTypeVar = $noTypeVar;
         $this->kwSplat = $kwSplat;
     }
-
 }
