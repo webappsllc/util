@@ -10,6 +10,7 @@ function public_object_vars(object $item) : array {
     return get_object_vars($item);
 }
 
+
 /**
  * Turns xml into an array
  *
@@ -130,5 +131,4 @@ function reflect_callable(callable $func) : ReflectionFunctionAbstract {
         }
     }
     throw new InvalidArgumentException('Cannot determine reflection type for callable.');
-    
 }
