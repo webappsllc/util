@@ -9,7 +9,7 @@ trait ReadOnlyArrayAccess {
     */
     public function offsetExists ( $mixOffset ) : bool
     {
-        return property_exists($this, $mixOffest);
+        return property_exists($this, $mixOffset);
     }
 
     /**
