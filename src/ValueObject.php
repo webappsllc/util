@@ -16,6 +16,7 @@ use Illuminate\Support\{
 };
 use Illuminate\Contracts\Support\Arrayable;
 
+use Webapps\Util\KeywordMaker;
 use Webapps\Util\Traits\MakeWithKeywords; 
 use Webapps\Util\Traits\ReadOnlyArrayAccess; 
 use Webapps\Util\Contracts\ConvertsToData; 
@@ -24,6 +25,8 @@ use Webapps\Util\Contracts\ConvertsToData;
  * A class designed to encapsulate a simple data object.
  *
  * Subclasses should define the properties they will use.
+ *
+ * A key feature of this class is that public properties are considered part of the value. Protected properties are not and are available to facilitate logic.
  */
 abstract class ValueObject implements
     Arrayable,
@@ -50,7 +53,7 @@ abstract class ValueObject implements
      */
     public function toClosure() : callable
     {
-        $lookup = $this->toArray();
+        $lookup = $this->all();
         return function ($property) use ($lookup) {
             return $lookup[$property] ?? null;
         };
@@ -63,19 +66,18 @@ abstract class ValueObject implements
      */
     public function getIterator() : iterable
     {
-        foreach ($this->toArray() as $key => $value) {
+        foreach ($this->all() as $key => $value) {
             yield $key => $value;
         }
     }
 
     /**
-     * Convert the object to an array.
+     * Convert the object to an assoc array.
      *
      * Only includes public properies.
      */
-    public function toArray() : array
-    {
-        return public_object_vars($this);
+    public function toArray() : array {
+        return collect($this->all())->toArray();
     }
 
     /**
@@ -85,11 +87,46 @@ abstract class ValueObject implements
      */
     public function toCollection() : Collection
     {
-        return new Collection($this->toArray());
+        return new Collection($this->all());
     }
 
-    public function toData() : array
-    {
+    /**
+     * Return an array with only some values specified by keys.
+     *
+     * @param array|string $keys - The keys to find and return in assoc array.
+     *
+     * @return array
+     */
+    public function only($keys) : array {
+        return Arr::only($this->all(), Arr::wrap($keys));
+    }
+
+    /**
+     * Return an array with some values removed, specified by keys.
+     *
+     * @param array|string $keys - The keys to find and return in assoc array.
+     *
+     * @return array
+     */
+    public function except($keys) : array {
+        return Arr::except($this->all(), Arr::wrap($keys));
+    }
+
+    /**
+     * Get all the values in the object as an assoc array.
+     */
+    public function all() : array {
+        return public_object_vars($this);
+    }
+
+    /**
+     * Build an array from the assoc array of this object and another array.
+     */
+    public function merge(array $other) : array {
+        return array_merge($this->all(), $other);
+    }
+
+    public function toData() : array {
         $result = [];
         foreach($this->toArray() as $key => $value) {
             $result[Str::snake($key)] = $value;
