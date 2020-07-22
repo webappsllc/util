@@ -71,6 +71,45 @@ class ValueObjectTest extends TestCase
       $val = new NoProps;
       $this->assertTrue(true);
     }
+
+    /** @test */
+    public function only_returns_assoc_array_of_values() {
+        $val = new MockValueObject('foo', 'bar');
+        $expected = ['fooProp' => 'foo'];
+
+        $this->assertEquals($expected, $val->only('fooProp'));
+    }
+
+    /** @test */
+    public function except_returns_assoc_array_of_values() {
+        $val = new MockValueObject('foo', 'bar');
+        $expected = ['fooProp' => 'foo'];
+
+        $this->assertEquals($expected, $val->except('barProp'));
+    }
+
+    /** @test */
+    public function only_all_values_as_assoc_array() {
+        $val = new MockValueObject('foo', 'bar');
+        $expected = [
+            'fooProp' => 'foo',
+            'barProp' => 'bar',
+        ];
+
+        $this->assertEquals($expected, $val->all());
+    }
+
+    /** @test */
+    public function merge_builds_assoc_array_with_overrides() {
+        $val = new MockValueObject('foo', 'bar');
+        $expected = [
+            'fooProp' => 'foo',
+            'barProp' => 'bar',
+            'fluff' => 'puff'
+        ];
+
+        $this->assertEqualsCanonicalizing($expected, $val->merge(['fluff' => 'puff']));
+    }
 }
 
 class MockValueObject extends ValueObject

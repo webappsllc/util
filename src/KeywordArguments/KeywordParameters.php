@@ -37,7 +37,6 @@ class KeywordParameters
         $keywordSplatIndex = null;
         $idx = 0;
 
-
         foreach ($this->parameters as $param) {
             $name = $param->name;
             if (Arr::exists($fields, $name)) {
