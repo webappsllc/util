@@ -82,7 +82,7 @@ class BaseClass
 {
     use MakeWithKeywords;
 
-    public $strinVar;
+    public $stringVar;
 
     public function __construct(string $stringVar) {
         $this->stringVar = $stringVar;

@@ -12,8 +12,6 @@ use Webapps\Util\KeywordArguments\KeywordMaker;
  */
 trait MakeWithKeywords {
 
-    protected static $_maker = [];
-
     /**
      * Creates an instance of this object from an array with string keys.
      *
@@ -22,7 +20,7 @@ trait MakeWithKeywords {
      * @param array|ArrayAccess $fields
      */
     public static function make($fields) {
-        return static::_getMaker()->make($fields);
+        return KeywordMaker::forClass(static::class)->make($fields);
     }
 
 
@@ -35,14 +33,6 @@ trait MakeWithKeywords {
      */
     public static function makeSafe(iterable $fields, callable $keyFunc = null)
     {
-        return static::_getMaker()->makeSafe($fields, $keyFunc);
-    }
-
-    protected static function _getMaker() : KeywordMaker {
-        if (!isset(static::$_maker[static::class])) {
-            static::$_maker[static::class] = new KeywordMaker(static::class);
-        }
-
-        return static::$_maker[static::class];
+        return KeywordMaker::forClass(static::class)->makeSafe($fields, $keyFunc);
     }
 }
