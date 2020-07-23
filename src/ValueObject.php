@@ -7,6 +7,8 @@ use ArrayAccess;
 use IteratorAggregate;
 use ReflectionClass;
 use ReflectionProperty;
+use Traversable;
+use JsonSerializable;
 
 use public_object_vars;
 use Illuminate\Support\{
@@ -15,9 +17,11 @@ use Illuminate\Support\{
     Collection
 };
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 
 use Webapps\Util\KeywordMaker;
-use Webapps\Util\Traits\MakeWithKeywords; 
+use Webapps\Util\Contracts\MakeWithKeywords as MakeWithKeywordsContract;
+use Webapps\Util\Traits\MakeWithKeywords as MakeWithKeywordsTrait;
 use Webapps\Util\Traits\ReadOnlyArrayAccess; 
 use Webapps\Util\Contracts\ConvertsToData; 
 
@@ -32,9 +36,11 @@ abstract class ValueObject implements
     Arrayable,
     ArrayAccess,
     IteratorAggregate,
-    ConvertsToData
+    JsonSerializable,
+    Jsonable,
+    MakeWithKeywordsContract
 {
-    use MakeWithKeywords;
+    use MakeWithKeywordsTrait;
     use ReadOnlyArrayAccess;
 
     public function __construct(array $kwSplat = [])
@@ -126,14 +132,6 @@ abstract class ValueObject implements
         return array_merge($this->all(), $other);
     }
 
-    public function toData() : array {
-        $result = [];
-        foreach($this->toArray() as $key => $value) {
-            $result[Str::snake($key)] = $value;
-        }
-        return $result;
-    }
-
     /**
      * Called when a poprety that does not exist is attempted to be set. Always throws.
      * @throws Exception
@@ -141,5 +139,42 @@ abstract class ValueObject implements
     public function __set($name, $_value)
     {
         throw new LogicException("Cannot set new properties on ValueObjects.");
+    }
+
+    /**
+     * Convert the object into something JSON serializable.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        return array_map(function ($value) {
+            if ($value instanceof JsonSerializable) {
+                return $value->jsonSerialize();
+            } elseif ($value instanceof Jsonable) {
+                return json_decode($value->toJson(), true);
+            } elseif ($value instanceof Arrayable) {
+                return $value->toArray();
+            } elseif (is_object($value)) {
+                return public_object_vars($value);
+            }
+
+            return $value;
+        }, $this->toArray());
+    }
+
+    /**
+     *  Convert the object to a json string.
+     * 
+     *  @return string
+     */
+    public function toJson($options = 0) : string {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * String representation of this object as json.
+     */
+    public function __toString() : string {
+        return $this->toJson();
     }
 }

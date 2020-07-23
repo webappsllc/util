@@ -13,6 +13,7 @@ class KeywordMaker {
 
     protected $className;
     protected $parameters;
+    protected static array $makers = [];
 
     public function __construct(string $className) {
         $this->className = $className;
@@ -51,4 +52,15 @@ class KeywordMaker {
         return static::make($args);
     }
 
+
+    /**
+     * Get the KeywordMaker for a given class. Create it if it doesn't exist.
+     */
+     public static function forClass(string $className) : KeywordMaker {
+        if (!isset(static::$makers[$className])) {
+            static::$makers[$className] = new KeywordMaker($className);
+        }
+
+        return static::$makers[$className];
+    }
 }
