@@ -28,6 +28,21 @@ class BuildWithKeywordsTest extends TestCase
         $this->assertEquals('str', $target->stringVar);
     }
 
+    /** @test */
+    public function can_build_instances_with_uninitialized_properties()
+    {
+        $obj = FactoryClass2::make(['stringVar' => 'str', 'booleanVar' => true]);
+
+        $target = $obj->build(
+            TargetClass::class,
+            ['intVar' => 42],
+            ['booleanVar' => 'boolVar']
+        );
+
+        $this->assertEquals(42, $target->intVar);
+        $this->assertEquals(true, $target->boolVar);
+        $this->assertEquals('str', $target->stringVar);
+    }
 }
 
 class FactoryClass
@@ -43,6 +58,10 @@ class FactoryClass
         $this->booleanVar = $booleanVar;
     }
 
+}
+
+class FactoryClass2 extends FactoryClass {
+    public ?int $someOtherVar;
 }
 
 class TargetClass
