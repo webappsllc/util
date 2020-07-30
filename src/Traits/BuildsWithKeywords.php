@@ -32,7 +32,7 @@ trait BuildsWithKeywords {
                 $name = $alias[$name];
             }
 
-            if(!array_key_exists($name, $override)) {
+            if(!array_key_exists($name, $override) && $prop->isInitialized($this)) {
                 $override[$name] = $prop->getValue($this);
             }
 
