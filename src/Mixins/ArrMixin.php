@@ -3,6 +3,7 @@
 namespace Webapps\Util\Mixins;
 
 class ArrMixin {
+
     public function camelKeys() : callable {
         return function (iterable $lookup) : array {
             $result = [];
@@ -12,6 +13,7 @@ class ArrMixin {
             }
 
             return $result;
-        }
+        };
     }
+
 }
