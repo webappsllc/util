@@ -17,6 +17,13 @@
         "phpunit/phpunit": "9.*",
         "dms/phpunit-arraysubset-asserts": "^0.2.0"
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webapps\\Util\\Providers\\UtilServiceProvider"
+            ]
+        }
+    },
     "autoload": {
         "files": ["src/helpers.php"],
         "psr-4": {
