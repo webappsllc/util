@@ -2,6 +2,8 @@
 
 namespace Webapps\Util\Mixins;
 
+use Illuminate\Support\Str;
+
 class ArrMixin {
 
     public function camelKeys() : callable {
@@ -9,7 +11,7 @@ class ArrMixin {
             $result = [];
 
             foreach($lookup as $key => $value) {
-                $result[static::camel($key)] = $value;
+                $result[Str::camel($key)] = $value;
             }
 
             return $result;
