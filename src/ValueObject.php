@@ -5,25 +5,18 @@ namespace Webapps\Util;
 use LogicException;
 use ArrayAccess;
 use IteratorAggregate;
-use ReflectionClass;
-use ReflectionProperty;
-use Traversable;
 use JsonSerializable;
 
-use public_object_vars;
 use Illuminate\Support\{
     Arr,
-    Str,
     Collection
 };
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
-use Webapps\Util\KeywordMaker;
 use Webapps\Util\Contracts\MakeWithKeywords as MakeWithKeywordsContract;
 use Webapps\Util\Traits\MakeWithKeywords as MakeWithKeywordsTrait;
 use Webapps\Util\Traits\ReadOnlyArrayAccess; 
-use Webapps\Util\Contracts\ConvertsToData; 
 
 /**
  * A class designed to encapsulate a simple data object.

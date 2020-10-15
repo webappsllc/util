@@ -22,17 +22,4 @@ trait MakeWithKeywords {
     public static function make($fields) {
         return KeywordMaker::forClass(static::class)->make($fields);
     }
-
-
-    /**
-     * Creates an instance of this object from an array with string keys.
-     *
-     * Keys can be amiguously cased and will result in camel case.
-     *
-     * @param array|ArrayAccess $fields
-     */
-    public static function makeSafe(iterable $fields, callable $keyFunc = null)
-    {
-        return KeywordMaker::forClass(static::class)->makeSafe($fields, $keyFunc);
-    }
 }

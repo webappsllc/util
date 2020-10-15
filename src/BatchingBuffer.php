@@ -4,7 +4,6 @@ namespace Webapps\Util;
 
 use Countable;
 
-use with;
 use Illuminate\Support\Collection;
 
 use Webapps\Util\Traits\MakeWithKeywords;
