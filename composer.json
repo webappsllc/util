@@ -9,9 +9,8 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "illuminate/support": "^8.0",
-        "illuminate/contracts": "^8.0"
+        "illuminate/support": "^9.0",
+        "illuminate/contracts": "^9.0"
     },
     "require-dev": {
         "phpunit/phpunit": "9.*",
